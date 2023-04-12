@@ -103,5 +103,148 @@ class MixerModel():
 
 ## ViT based on convolution
 ### ViT introduction
+ViT (Vision Transformer) is a state-of-the-art deep learning model for image recognition tasks. It is based on the transformer architecture and is capable of processing images as sequences of tokens. ViT is trained on a large amount of labeled image data and learns to extract features from the image by dividing it into a set of fixed-size patches. These patches are then fed into a series of transformer blocks, which enable the model to learn complex relationships between the image features. ViT has achieved impressive results on a variety of image recognition benchmarks and has shown to be highly effective in transfer learning scenarios. Its success has paved the way for the development of other transformer-based models for computer vision tasks.
 
-## Result & Conclusion
+### ViT with convolution
+- here the code is re-written in such a way that there is no linear layer for attention mechanism.
+- Below is the model architecture summary where there is no linear layer
+
+```
+    ----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+         Rearrange-1               [-1, 64, 48]               0
+            Conv2d-2           [-1, 512, 64, 1]          24,576
+      ModifyConv2d-3              [-1, 64, 512]               0
+           Dropout-4              [-1, 65, 512]               0
+         LayerNorm-5              [-1, 65, 512]           1,024
+            Conv2d-6          [-1, 1536, 65, 1]         786,432
+      ModifyConv2d-7             [-1, 65, 1536]               0
+           Softmax-8            [-1, 8, 65, 65]               0
+            Conv2d-9           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-10              [-1, 65, 512]               0
+          Dropout-11              [-1, 65, 512]               0
+        Attention-12              [-1, 65, 512]               0
+          PreNorm-13              [-1, 65, 512]               0
+        LayerNorm-14              [-1, 65, 512]           1,024
+           Conv2d-15           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-16              [-1, 65, 512]               0
+             GELU-17              [-1, 65, 512]               0
+          Dropout-18              [-1, 65, 512]               0
+           Conv2d-19           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-20              [-1, 65, 512]               0
+          Dropout-21              [-1, 65, 512]               0
+      FeedForward-22              [-1, 65, 512]               0
+          PreNorm-23              [-1, 65, 512]               0
+        LayerNorm-24              [-1, 65, 512]           1,024
+           Conv2d-25          [-1, 1536, 65, 1]         786,432
+     ModifyConv2d-26             [-1, 65, 1536]               0
+          Softmax-27            [-1, 8, 65, 65]               0
+           Conv2d-28           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-29              [-1, 65, 512]               0
+          Dropout-30              [-1, 65, 512]               0
+        Attention-31              [-1, 65, 512]               0
+          PreNorm-32              [-1, 65, 512]               0
+        LayerNorm-33              [-1, 65, 512]           1,024
+           Conv2d-34           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-35              [-1, 65, 512]               0
+             GELU-36              [-1, 65, 512]               0
+          Dropout-37              [-1, 65, 512]               0
+           Conv2d-38           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-39              [-1, 65, 512]               0
+          Dropout-40              [-1, 65, 512]               0
+      FeedForward-41              [-1, 65, 512]               0
+          PreNorm-42              [-1, 65, 512]               0
+        LayerNorm-43              [-1, 65, 512]           1,024
+           Conv2d-44          [-1, 1536, 65, 1]         786,432
+     ModifyConv2d-45             [-1, 65, 1536]               0
+          Softmax-46            [-1, 8, 65, 65]               0
+           Conv2d-47           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-48              [-1, 65, 512]               0
+          Dropout-49              [-1, 65, 512]               0
+        Attention-50              [-1, 65, 512]               0
+          PreNorm-51              [-1, 65, 512]               0
+        LayerNorm-52              [-1, 65, 512]           1,024
+           Conv2d-53           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-54              [-1, 65, 512]               0
+             GELU-55              [-1, 65, 512]               0
+          Dropout-56              [-1, 65, 512]               0
+           Conv2d-57           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-58              [-1, 65, 512]               0
+          Dropout-59              [-1, 65, 512]               0
+      FeedForward-60              [-1, 65, 512]               0
+          PreNorm-61              [-1, 65, 512]               0
+        LayerNorm-62              [-1, 65, 512]           1,024
+           Conv2d-63          [-1, 1536, 65, 1]         786,432
+     ModifyConv2d-64             [-1, 65, 1536]               0
+          Softmax-65            [-1, 8, 65, 65]               0
+           Conv2d-66           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-67              [-1, 65, 512]               0
+          Dropout-68              [-1, 65, 512]               0
+        Attention-69              [-1, 65, 512]               0
+          PreNorm-70              [-1, 65, 512]               0
+        LayerNorm-71              [-1, 65, 512]           1,024
+           Conv2d-72           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-73              [-1, 65, 512]               0
+             GELU-74              [-1, 65, 512]               0
+          Dropout-75              [-1, 65, 512]               0
+           Conv2d-76           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-77              [-1, 65, 512]               0
+          Dropout-78              [-1, 65, 512]               0
+      FeedForward-79              [-1, 65, 512]               0
+          PreNorm-80              [-1, 65, 512]               0
+        LayerNorm-81              [-1, 65, 512]           1,024
+           Conv2d-82          [-1, 1536, 65, 1]         786,432
+     ModifyConv2d-83             [-1, 65, 1536]               0
+          Softmax-84            [-1, 8, 65, 65]               0
+           Conv2d-85           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-86              [-1, 65, 512]               0
+          Dropout-87              [-1, 65, 512]               0
+        Attention-88              [-1, 65, 512]               0
+          PreNorm-89              [-1, 65, 512]               0
+        LayerNorm-90              [-1, 65, 512]           1,024
+           Conv2d-91           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-92              [-1, 65, 512]               0
+             GELU-93              [-1, 65, 512]               0
+          Dropout-94              [-1, 65, 512]               0
+           Conv2d-95           [-1, 512, 65, 1]         262,144
+     ModifyConv2d-96              [-1, 65, 512]               0
+          Dropout-97              [-1, 65, 512]               0
+      FeedForward-98              [-1, 65, 512]               0
+          PreNorm-99              [-1, 65, 512]               0
+       LayerNorm-100              [-1, 65, 512]           1,024
+          Conv2d-101          [-1, 1536, 65, 1]         786,432
+    ModifyConv2d-102             [-1, 65, 1536]               0
+         Softmax-103            [-1, 8, 65, 65]               0
+          Conv2d-104           [-1, 512, 65, 1]         262,144
+    ModifyConv2d-105              [-1, 65, 512]               0
+         Dropout-106              [-1, 65, 512]               0
+       Attention-107              [-1, 65, 512]               0
+         PreNorm-108              [-1, 65, 512]               0
+       LayerNorm-109              [-1, 65, 512]           1,024
+          Conv2d-110           [-1, 512, 65, 1]         262,144
+    ModifyConv2d-111              [-1, 65, 512]               0
+            GELU-112              [-1, 65, 512]               0
+         Dropout-113              [-1, 65, 512]               0
+          Conv2d-114           [-1, 512, 65, 1]         262,144
+    ModifyConv2d-115              [-1, 65, 512]               0
+         Dropout-116              [-1, 65, 512]               0
+     FeedForward-117              [-1, 65, 512]               0
+         PreNorm-118              [-1, 65, 512]               0
+     Transformer-119              [-1, 65, 512]               0
+        Identity-120                  [-1, 512]               0
+       LayerNorm-121                  [-1, 512]           1,024
+          Linear-122                   [-1, 10]           5,130
+================================================================
+Total params: 9,480,202
+Trainable params: 9,480,202
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 0.01
+Forward/backward pass size (MB): 36.10
+Params size (MB): 36.16
+Estimated Total Size (MB): 72.28
+----------------------------------------------------------------
+```
+ - Results: ``` ViT: Epoch: 24 | Train Acc: 0.6438, Test Acc: 0.6850, Time: 45.7```
+
